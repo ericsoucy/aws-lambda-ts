@@ -1,0 +1,11 @@
+{
+"extends": "@tsconfig/node14/tsconfig.json",
+  "compilerOptions": {
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "resolveJsonModule": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.js", "src/app.ts.bak", "src/handlers/get-all-items.ts.bak"]
+}
