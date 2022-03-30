@@ -4,16 +4,17 @@ import * as config from '../env.json';
 
 // Create clients and set shared const values outside of the handler.
 import CustomDynamoClient from '../utils/dynamodb';
+import { getAllItemsHandler } from './get-all-items';
 
 export const LambdaHandler = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
   var response: ApiResponse;
-  // All log statements are written to CloudWatch
+
   console.info('received:', event);
   switch (event.httpMethod) {
     case 'GET':
-
+      response = await getAllItemsHandler();
     default:
       response = {
         statusCode: 405,
@@ -21,18 +22,6 @@ export const LambdaHandler = async (
       };
   }
 
-  /*
-  const client = new CustomDynamoClient(
-    config.getAllItemsFunction.SAMPLE_TABLE
-  );
-  const items = await client.readAll();
-
-  const response = {
-    statusCode: 200,
-    body: JSON.stringify(items),
-  };
-*/
-  // All log statements are written to CloudWatch
   console.info(
     `response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`
   );

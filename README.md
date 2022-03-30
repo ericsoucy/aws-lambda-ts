@@ -34,3 +34,32 @@ podman run --rm -it -p 4566:4566 -p 4571:4571 localstack/localstack -e DEFAULT_R
 //check
 curl http://localhost:4566/health | jq
 ```
+
+## packaging
+
+<https://docs.aws.amazon.com/lambda/latest/dg/nodejs-package.html>
+
+zip -r function.zip .
+
+or
+
+```bash
+npm install
+npm run build
+cp -r dist "$(ARTIFACTS_DIR)/"
+```
+
+## Terraform with local stack
+
+<https://registry.terraform.io/providers/hashicorp/aws/latest/docs/guides/custom-service-endpoints#localstack>
+
+<https://docs.localstack.cloud/integrations/terraform/>
+
+<https://dev.to/mrwormhole/localstack-with-terraform-and-docker-for-running-aws-locally-3a6d>
+
+```bash
+cd infra-as-code
+terraform init
+terraform validate
+terraform plan
+terraform apply -auto-approve

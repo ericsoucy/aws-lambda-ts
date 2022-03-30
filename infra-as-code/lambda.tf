@@ -1,6 +1,6 @@
 variable "ZIP_PATH" {
   type    = string
-  default = "../dist/main.zip"
+  default = "../dist/function.zip"
 }
 
 resource "aws_iam_role" "lambda-execution-role" {
@@ -16,12 +16,12 @@ resource "aws_iam_role_policy" "lambda_policy" {
   policy = file("policy.json")
 }
 
-resource "aws_lambda_function" "golambdafunction" {
+resource "aws_lambda_function" "tslambdafunction" {
   filename      = var.ZIP_PATH
-  function_name = "go-serverless-api"
+  function_name = "ts-lambda-function"
   role          = aws_iam_role.lambda-execution-role.arn
-  handler       = "main"
-  runtime       = "go1.x"
+  handler       = "handlers/handler.js"
+  runtime       = "nodejs14.x"
   #timeout       = 30
   #source_code_hash = filebase64sha256(var.JAR_PATH)
   #memory_size = 1024
@@ -31,11 +31,11 @@ resource "aws_lambda_function" "golambdafunction" {
 resource "aws_lambda_permission" "apigw" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.golambdafunction.function_name
+  function_name = aws_lambda_function.tslambdafunction.function_name
   principal     = "apigateway.amazonaws.com"
 
   # The /*/* portion grants access from any method on any resource
   # within the API Gateway "REST API".
-  source_arn = "${aws_api_gateway_rest_api.go_serverless_api.execution_arn}/*/*"
+  source_arn = "${aws_api_gateway_rest_api.ts_serverless_api.execution_arn}/*/*"
 }
 
