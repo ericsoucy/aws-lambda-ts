@@ -20,7 +20,7 @@ resource "aws_lambda_function" "tslambdafunction" {
   filename      = var.ZIP_PATH
   function_name = "ts-lambda-function"
   role          = aws_iam_role.lambda-execution-role.arn
-  handler       = "handlers/handler.js"
+  handler       = "handlers/handler.LambdaHandler"
   runtime       = "nodejs14.x"
   #timeout       = 30
   #source_code_hash = filebase64sha256(var.JAR_PATH)

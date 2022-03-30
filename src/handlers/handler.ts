@@ -1,9 +1,7 @@
 import 'source-map-support/register';
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import * as config from '../env.json';
 
 // Create clients and set shared const values outside of the handler.
-import CustomDynamoClient from '../utils/dynamodb';
 import { getAllItemsHandler } from './get-all-items';
 
 export const LambdaHandler = async (
@@ -15,11 +13,13 @@ export const LambdaHandler = async (
   switch (event.httpMethod) {
     case 'GET':
       response = await getAllItemsHandler();
+      break;
     default:
       response = {
         statusCode: 405,
         body: JSON.stringify({ error: 'method not allowed' }),
       };
+      break;
   }
 
   console.info(

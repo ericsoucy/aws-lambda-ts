@@ -39,15 +39,12 @@ curl http://localhost:4566/health | jq
 
 <https://docs.aws.amazon.com/lambda/latest/dg/nodejs-package.html>
 
-zip -r function.zip .
-
-or
-
 ```bash
-npm install
 npm run build
-cp -r dist "$(ARTIFACTS_DIR)/"
+cp node_modules dist
+zip -r function.zip .
 ```
+
 
 ## Terraform with local stack
 
@@ -63,3 +60,37 @@ terraform init
 terraform validate
 terraform plan
 terraform apply -auto-approve
+```
+
+## AWS validate stuff
+
+```bash
+aws --endpoint-url=http://localhost:4566 lambda list-functions --profile local
+aws --endpoint-url=http://localhost:4566 apigateway get-rest-apis --profile local
+
+//v4xiad2sdy
+aws --endpoint-url=http://localhost:4566 apigateway get-rest-api --rest-api-id v4xiad2sdy --profile local
+
+aws --endpoint-url=http://localhost:4566 apigateway get-deployments --rest-api-id v4xiad2sdy --profile local
+
+aws --endpoint-url=http://localhost:4566 apigateway get-deployment --rest-api-id v4xiad2sdy --deployment-id lz0zgwno23 --profile local
+
+aws --endpoint-url=http://localhost:4566 apigateway get-resources --rest-api-id v4xiad2sdy --profile local
+```
+
+## tests with curl
+
+```bash
+curl -vvvv http://localhost:4566/restapis/v4xiad2sdy/test/_user_request_/
+```
+
+## logs
+
+```bash
+aws --endpoint-url=http://localhost:4566 logs describe-log-groups --profile local
+
+aws --endpoint-url=http://localhost:4566 logs describe-log-streams --log-group-name /aws/lambda/ts-lambda-function --profile local
+
+ aws --endpoint-url=http://localhost:4566 logs get-log-events --log-group-name /aws/lambda/ts-lambda-function --log-stream-name '2022/03/30/[LATEST]cb92877e' --profile local
+
+```
