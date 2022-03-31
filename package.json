@@ -2,7 +2,7 @@
   "name": "aws-lambda-ts",
   "version": "1.0.0",
   "description": "aws lambda test with type script",
-  "main": "index.js",
+  
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w --preserveWatchOutput"
