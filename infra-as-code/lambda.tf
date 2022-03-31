@@ -23,7 +23,7 @@ resource "aws_lambda_function" "tslambdafunction" {
   handler       = "handlers/handler.LambdaHandler"
   runtime       = "nodejs14.x"
   #timeout       = 30
-  #source_code_hash = filebase64sha256(var.JAR_PATH)
+  source_code_hash = filebase64sha256(var.ZIP_PATH)
   #memory_size = 1024
 
 }

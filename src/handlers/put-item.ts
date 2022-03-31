@@ -19,17 +19,12 @@ export const putItemHandler = async (body: string | null) => {
     airlineCode: reqBody.airlinecode,
     airlineDisplayName: reqBody.airlinedisplayname,
   };
-  // airlineCarrier.airlineCode = event['code'];
-  //airlineCarrier.airlineDisplayName = event['name'];
-
-  //await mapper.put(airlineCarrier);
-  //await client.write(airlineCarrier);
 
   try {
     const data = await client.write(airlineCarrier);
     response = {
       statusCode: 201,
-      body: JSON.stringify(data),
+      body: JSON.stringify(reqBody),
     };
   } catch (err) {
     response = {
@@ -38,20 +33,4 @@ export const putItemHandler = async (body: string | null) => {
     };
   }
   return response;
-  //   client
-  //     .write(airlineCarrier)
-  //     .then(function (data) {
-  //       const response: ApiResponse = {
-  //         statusCode: 201,
-  //         body: JSON.stringify(data),
-  //       };
-  //       return response;
-  //     })
-  //     .catch(function (err) {
-  //       const response: ApiResponse = {
-  //         statusCode: 500,
-  //         body: JSON.stringify(err),
-  //       };
-  //       return response;
-  //     });
 };
