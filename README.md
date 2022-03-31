@@ -76,12 +76,21 @@ aws --endpoint-url=http://localhost:4566 apigateway get-deployments --rest-api-i
 aws --endpoint-url=http://localhost:4566 apigateway get-deployment --rest-api-id v4xiad2sdy --deployment-id lz0zgwno23 --profile local
 
 aws --endpoint-url=http://localhost:4566 apigateway get-resources --rest-api-id v4xiad2sdy --profile local
+
+//dynamodb
+aws dynamodb list-tables --endpoint-url=http://localhost:4566 --profile local
+
+aws dynamodb scan --table-name AirlineCarriers --endpoint-url=http://localhost:4566 --profile local
 ```
 
 ## tests with curl
 
 ```bash
 curl -vvvv http://localhost:4566/restapis/v4xiad2sdy/test/_user_request_/
+
+curl -vvvv --header "Content-Type: application/json" --request POST --data '{"airlinecode":"zzz","airlinedisplayname":"display"}' http://localhost:4566/restapis/kn733tt49y/test/_user_request_/
+
+curl -vvvv --header "Content-Type: application/json" --request PUT --data '{"email": "totot@toto.com", "firstName": "titi", "lastName":"titi"}'
 ```
 
 ## logs

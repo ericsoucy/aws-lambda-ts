@@ -11,7 +11,7 @@
        "dynamodb:PutItem",
        "dynamodb:UpdateItem"
       ],
-      "Resource": "arn:aws:dynamodb:ca-central-1:987456321456:table/test-ts-lambda-table"
+      "Resource": "arn:aws:dynamodb:ca-central-1:987456321456:table/AirlineCarriers"
      }
     ]
   }

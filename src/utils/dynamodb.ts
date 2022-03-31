@@ -6,15 +6,18 @@ import AWS from 'aws-sdk/';
 export default class CustomDynamoClient {
   table: string;
   client: DynamoDB.DocumentClient;
+  dynamodbservice!: AWS.DynamoDB;
 
   //constructor(table = process.env.SAMPLE_TABLE) {
   constructor(table: string) {
-    var dynamodbservice = new AWS.DynamoDB({
+    this.dynamodbservice = new AWS.DynamoDB({
       region: 'ca-central-1',
       endpoint: 'http://localhost:4566',
     });
 
-    this.client = this.client = new DynamoDB.DocumentClient(dynamodbservice);
+    this.client = this.client = new DynamoDB.DocumentClient(
+      this.dynamodbservice
+    );
     this.table = table;
   }
 

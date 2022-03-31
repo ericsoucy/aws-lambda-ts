@@ -1,6 +1,7 @@
 {
 "extends": "@tsconfig/node14/tsconfig.json",
   "compilerOptions": {
+    "experimentalDecorators": true,
     "sourceMap": true,
     "moduleResolution": "node",
     "outDir": "./dist",
