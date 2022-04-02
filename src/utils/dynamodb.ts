@@ -25,7 +25,7 @@ export default class CustomDynamoClient {
     const data = await this.client.scan({ TableName: this.table }).promise();
     return data.Items;
   }
-  //{"airlineCode":{"S":"yyz"}}
+
   async read(value: any) {
     var params = {
       TableName: this.table, //Key: { airlineCode: 'yyz' }, works

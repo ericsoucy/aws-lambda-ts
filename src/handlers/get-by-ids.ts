@@ -16,6 +16,14 @@ export const getItemHandler = async (id: string) => {
 
   const item = await client.read(id);
 
+  if (item === null || item === undefined) {
+    response = {
+      statusCode: 404,
+      body: JSON.stringify({ Error: `'${id} Not found'` }),
+    };
+    return response;
+  }
+
   response = {
     statusCode: 200,
     body: JSON.stringify(item),
