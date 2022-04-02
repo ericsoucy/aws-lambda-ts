@@ -81,6 +81,8 @@ aws --endpoint-url=http://localhost:4566 apigateway get-resources --rest-api-id 
 aws dynamodb list-tables --endpoint-url=http://localhost:4566 --profile local
 
 aws dynamodb scan --table-name AirlineCarriers --endpoint-url=http://localhost:4566 --profile local
+
+aws dynamodb get-item --table-name AirlineCarriers --key '{"airlineCode":{"S":"yyz"}}' --endpoint-url=http://localhost:4566 --profile local
 ```
 
 ## tests with curl
