@@ -104,4 +104,19 @@ aws --endpoint-url=http://localhost:4566 logs describe-log-streams --log-group-n
 
  aws --endpoint-url=http://localhost:4566 logs get-log-events --log-group-name /aws/lambda/ts-lambda-function --log-stream-name '2022/03/30/[LATEST]cb92877e' --profile local
 
+aws --endpoint-url=http://localhost:4566 logs describe-log-streams --log-group-name /aws/lambda/sqs-lambda-function --profile local
+
+aws --endpoint-url=http://localhost:4566 logs get-log-events --log-group-name /aws/lambda/sqs-lambda-function --log-stream-name '2022/04/05/[1]26062d6a' --profile local
+
+
+aws --endpoint-url=http://localhost:4566 logs get-log-events --log-group-name /aws/lambda/sqs-lambda-function --log-stream-name '2022/04/05/[1]26062d6a' --profile local
+
+
+```
+
+## SQS
+
+```bash
+ aws --endpoint http://localhost:4566 sqs send-message --queue-url 
+ http://localhost:4566/000000000000/test-ts-sqs --message-body '{"airlineCode":"xyz","airlineDisplayName":"displaxyz"}'
 ```

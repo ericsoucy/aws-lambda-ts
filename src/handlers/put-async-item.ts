@@ -2,7 +2,10 @@ import CustomSqsClient from '../utils/sqs';
 import * as config from '../env.json';
 
 export const putItemAsyncHandler = async (body: string | null) => {
-  let response: ApiResponse;
+  let response: ApiResponse = {
+    statusCode: 500,
+    body: JSON.stringify({ Error: 'empty response' }),
+  };
 
   if (body === null) {
     response = {
@@ -19,12 +22,25 @@ export const putItemAsyncHandler = async (body: string | null) => {
   };
 
   const client = new CustomSqsClient(config.putItemAsyncFunction.ITEM_QUEUE);
-  const result = await client.send(airlineCarrier);
+  //const result = await client.send(airlineCarrier);
 
-  response = {
-    statusCode: 201,
-    body: JSON.stringify({ MessageId: result.MessageId }),
-  };
+  client
+    .send(airlineCarrier)
+    .then((res) => {
+      response = {
+        statusCode: 201,
+        body: JSON.stringify({ Message: res }),
+      };
+      return response;
+    })
+    .catch((error) => {
+      response = {
+        statusCode: 500,
+        body: JSON.stringify({ Error: error.message }),
+      };
+      return response;
+    });
+
   return response;
 };
 

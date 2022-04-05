@@ -13,7 +13,10 @@ export const writeItemHandler = async (event: SQSEvent) => {
 
   for (const record of event.Records) {
     const body = JSON.parse(record.body);
-    const item = { id: body.id, name: body.name };
+    const item = {
+      airlinecode: body.airlinecode,
+      airlinedisplayname: body.airlinedisplayname,
+    };
     const client = new CustomDynamoClient(
       config.getAllItemsFunction.SAMPLE_TABLE
     );

@@ -24,11 +24,9 @@ export const LambdaHandler = async (
         break;
       }
     case 'POST':
-      if (event.queryStringParameters != null) {
-        if (event.queryStringParameters['asyncpost'] === '1') {
-          response = await putItemAsyncHandler(event.body);
-          break;
-        }
+      if (event.queryStringParameters?.asyncpost === '1') {
+        response = await putItemAsyncHandler(event.body);
+        break;
       } else {
         response = await putItemHandler(event.body);
         break;

@@ -12,6 +12,15 @@
        "dynamodb:UpdateItem"
       ],
       "Resource": "arn:aws:dynamodb:ca-central-1:987456321456:table/AirlineCarriers"
+     },
+     {
+       "Effect": "Allow",
+       "Action":[
+        "sqs:SendMessage",
+        "sqs:DeleteMessage",
+        "sqs:ReceiveMessage"
+       ],
+       "Resource":"arn:aws:sqs:ca-central-1:987456321456:test-ts-sqs"
      }
     ]
   }

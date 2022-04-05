@@ -7,7 +7,10 @@ export default class CustomSqsClient {
 
   //constructor(queue = process.env.ITEM_QUEUE) {
   constructor(queue: string) {
-    this.sqs = new SQS();
+    this.sqs = new SQS({
+      region: 'ca-central-1',
+      endpoint: 'http://localhost:4566',
+    });
     this.queue = queue;
   }
 
@@ -18,6 +21,24 @@ export default class CustomSqsClient {
       QueueUrl: this.queue,
       DelaySeconds: 0,
     };
-    return await sqs.sendMessage(params).promise();
+    try {
+      return await sqs.sendMessage(params).promise();
+    } catch (err) {
+      return new Promise((resolve, reject) => {
+        reject(err);
+      });
+    }
+    /*sqs.sendMessage(params, function (err, data) {
+      if (err) {
+        console.log('Error', err);
+        return new Promise((resolve, reject) => {
+          reject(err);
+        });
+      } else {
+        return new Promise((resolve, reject) => {
+          resolve(data);
+        });
+      }
+    });*/
   }
 }
