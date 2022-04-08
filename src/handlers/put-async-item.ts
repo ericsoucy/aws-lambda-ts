@@ -20,7 +20,7 @@ export const putItemAsyncHandler = async (body: string | null) => {
   const client = new CustomSqsClient(config.putItemAsyncFunction.ITEM_QUEUE);
   //const result = await client.send(airlineCarrier);
 
-  client
+  return client
     .send(airlineCarrier)
     .then((res) => {
       const response: ApiResponse = {
@@ -43,14 +43,4 @@ export const putItemAsyncHandler = async (body: string | null) => {
       };
       return response;
     });
-
-  const response: ApiResponse = {
-    statusCode: 500,
-    body: JSON.stringify({ Error: 'fuck you empty response' }),
-  };
-  return response;
 };
-
-/*function putItemAsyncHandler(body: string | null): ApiResponse | PromiseLike<ApiResponse> {
-  throw new Error('Function not implemented.');
-}*/
