@@ -2,13 +2,8 @@ import CustomSqsClient from '../utils/sqs';
 import * as config from '../env.json';
 
 export const putItemAsyncHandler = async (body: string | null) => {
-  let response: ApiResponse = {
-    statusCode: 500,
-    body: JSON.stringify({ Error: 'empty response' }),
-  };
-
   if (body === null) {
-    response = {
+    const response: ApiResponse = {
       statusCode: 400,
       body: JSON.stringify({ Error: 'Bad Request' }),
     };
@@ -17,9 +12,10 @@ export const putItemAsyncHandler = async (body: string | null) => {
   const reqBody = JSON.parse(body);
 
   const airlineCarrier: AirlineCarriers = {
-    airlineCode: reqBody.airlinecode,
-    airlineDisplayName: reqBody.airlinedisplayname,
+    airlineCode: reqBody.airlineCode,
+    airlineDisplayName: reqBody.airlineDisplayName,
   };
+  console.log('airlineCarrier', airlineCarrier);
 
   const client = new CustomSqsClient(config.putItemAsyncFunction.ITEM_QUEUE);
   //const result = await client.send(airlineCarrier);
@@ -27,20 +23,31 @@ export const putItemAsyncHandler = async (body: string | null) => {
   client
     .send(airlineCarrier)
     .then((res) => {
-      response = {
+      const response: ApiResponse = {
         statusCode: 201,
         body: JSON.stringify({ Message: res }),
       };
       return response;
     })
     .catch((error) => {
-      response = {
+      console.log(error);
+      const response: ApiResponse = {
         statusCode: 500,
-        body: JSON.stringify({ Error: error.message }),
+        body: JSON.stringify({
+          mega: 'test',
+          type: error.type,
+          code: error.code,
+          message: error.message,
+          detail: error.detail,
+        }),
       };
       return response;
     });
 
+  const response: ApiResponse = {
+    statusCode: 500,
+    body: JSON.stringify({ Error: 'fuck you empty response' }),
+  };
   return response;
 };
 

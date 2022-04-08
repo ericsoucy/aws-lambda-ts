@@ -15,30 +15,19 @@ export default class CustomSqsClient {
   }
 
   async send(body: object) {
-    const sqs = new SQS();
+    console.log('send body', body);
     const params = {
       MessageBody: JSON.stringify(body),
       QueueUrl: this.queue,
       DelaySeconds: 0,
     };
+    console.log('params', params);
     try {
-      return await sqs.sendMessage(params).promise();
+      return await this.sqs.sendMessage(params).promise();
     } catch (err) {
       return new Promise((resolve, reject) => {
         reject(err);
       });
     }
-    /*sqs.sendMessage(params, function (err, data) {
-      if (err) {
-        console.log('Error', err);
-        return new Promise((resolve, reject) => {
-          reject(err);
-        });
-      } else {
-        return new Promise((resolve, reject) => {
-          resolve(data);
-        });
-      }
-    });*/
   }
 }

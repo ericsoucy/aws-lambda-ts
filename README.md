@@ -29,7 +29,9 @@ podman run --rm -it -p 4566:4566 -p 4571:4571 localstack/localstack
 podman run --rm -it -p 4566:4566 -p 4571:4571 --network host localstack/localstack
 
 // to make this run lambda that calls dynamodb
-podman run --rm -it -p 4566:4566 -p 4571:4571 localstack/localstack -e DEFAULT_REGION=ca-central-1 -e AWS_DEFAULT_REGION=ca-central-1 -e AWS_SECRET_ACCESS_KEY = "test" -e AWS_ACCESS_KEY_ID = "test"
+podman run --rm -it -p 4566:4566 -p 4571:4571 localstack/localstack -e DEFAULT_REGION=ca-central-1 -e AWS_DEFAULT_REGION=ca-central-1 -e AWS_SECRET_ACCESS_KEY = "test" -e AWS_ACCESS_KEY_ID = "test" 
+
+podman run --rm -it -p 4566:4566 -p 4571:4571 --network host localstack/localstack -e DEFAULT_REGION=ca-central-1 -e AWS_DEFAULT_REGION=ca-central-1 -e AWS_SECRET_ACCESS_KEY = "test" -e AWS_ACCESS_KEY_ID = "test" 
 
 //check
 curl http://localhost:4566/health | jq
@@ -80,6 +82,8 @@ aws --endpoint-url=http://localhost:4566 apigateway get-resources --rest-api-id 
 //dynamodb
 aws dynamodb list-tables --endpoint-url=http://localhost:4566 --profile local
 
+aws dynamodb describe-table --table-name AirlineCarriers --endpoint-url=http://localhost:4566 --profile local
+
 aws dynamodb scan --table-name AirlineCarriers --endpoint-url=http://localhost:4566 --profile local
 
 aws dynamodb get-item --table-name AirlineCarriers --key '{"airlineCode":{"S":"yyz"}}' --endpoint-url=http://localhost:4566 --profile local
@@ -90,9 +94,13 @@ aws dynamodb get-item --table-name AirlineCarriers --key '{"airlineCode":{"S":"y
 ```bash
 curl -vvvv http://localhost:4566/restapis/v4xiad2sdy/test/_user_request_/
 
-curl -vvvv --header "Content-Type: application/json" --request POST --data '{"airlinecode":"zzz","airlinedisplayname":"display"}' http://localhost:4566/restapis/kn733tt49y/test/_user_request_/
+curl -vvvv --header "Content-Type: application/json" --request POST --data '{"airlineCode":"zzz","airlineDisplayName":"display"}' http://localhost:4566/restapis/kn733tt49y/test/_user_request_/
 
 curl -vvvv --header "Content-Type: application/json" --request PUT --data '{"email": "totot@toto.com", "firstName": "titi", "lastName":"titi"}'
+
+
+//async
+curl -vvvv --header "Content-Type: application/json" --request POST --data '{"airlineCode":"zzzfy2","airlineDisplayName":"fy2"}' http://localhost:4566/restapis/g60sucv471/test/_user_request_/?asyncpost=1
 ```
 
 ## logs
@@ -117,6 +125,8 @@ aws --endpoint-url=http://localhost:4566 logs get-log-events --log-group-name /a
 ## SQS
 
 ```bash
+aws --endpoint http://localhost:4566 sqs list-queues --profile local
+
  aws --endpoint http://localhost:4566 sqs send-message --queue-url 
  http://localhost:4566/000000000000/test-ts-sqs --message-body '{"airlineCode":"xyz","airlineDisplayName":"displaxyz"}'
 ```

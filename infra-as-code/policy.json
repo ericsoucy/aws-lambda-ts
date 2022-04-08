@@ -21,6 +21,15 @@
         "sqs:ReceiveMessage"
        ],
        "Resource":"arn:aws:sqs:ca-central-1:987456321456:test-ts-sqs"
-     }
+     },
+     {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "*"
+  }
     ]
   }

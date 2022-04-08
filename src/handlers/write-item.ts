@@ -12,16 +12,22 @@ export const writeItemHandler = async (event: SQSEvent) => {
   console.info('Received from SQS:', event);
 
   for (const record of event.Records) {
+    console.info('recordbody:', record.body);
     const body = JSON.parse(record.body);
+    console.info('parsed body:', body);
     const item = {
-      airlinecode: body.airlinecode,
-      airlinedisplayname: body.airlinedisplayname,
+      airlineCode: body.airlineCode,
+      airlineDisplayName: body.airlineDisplayName,
     };
     const client = new CustomDynamoClient(
       config.getAllItemsFunction.SAMPLE_TABLE
     );
-
-    await client.write(item);
+    console.info('item ', item);
+    try {
+      await client.write(item);
+    } catch (err) {
+      console.error(err);
+    }
 
     console.info('Written to DynamoDB:', item);
   }
