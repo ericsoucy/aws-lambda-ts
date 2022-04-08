@@ -1,4 +1,4 @@
-# Type script lamdba
+# Type script lambda
 
 ![architecture](./architecture.svg)
 
