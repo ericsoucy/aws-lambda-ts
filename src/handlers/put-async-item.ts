@@ -18,7 +18,6 @@ export const putItemAsyncHandler = async (body: string | null) => {
   console.log('airlineCarrier', airlineCarrier);
 
   const client = new CustomSqsClient(config.putItemAsyncFunction.ITEM_QUEUE);
-  //const result = await client.send(airlineCarrier);
 
   return client
     .send(airlineCarrier)
