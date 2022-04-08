@@ -1,4 +1,4 @@
-# Type script lambda
+# Lambda with typescript localstack and terraform
 
 ![architecture](./architecture.svg)
 
